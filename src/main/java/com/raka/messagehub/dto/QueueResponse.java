@@ -3,8 +3,8 @@ package com.raka.messagehub.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class PostMessageResponse  extends QueueResponse{
+public class QueueResponse{
 	@Getter
 	@Setter
-	boolean success;
+	String responseStatus = "OK";
 }

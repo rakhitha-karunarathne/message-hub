@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.raka.messagehub.dto.GetMessageResponse;
 import com.raka.messagehub.dto.GetQueuesResponse;
 import com.raka.messagehub.dto.Message;
 import com.raka.messagehub.dto.PostMessageResponse;
@@ -40,7 +41,9 @@ public class QueueController {
 	}
 	
 	@PostMapping(value = "{queueId}/receive")
-	public List<Message> getMessages(@PathVariable String queueOwner,@PathVariable String queueId){
-		return queueService.getMessages(queueOwner,queueId);
+	public GetMessageResponse getMessages(@PathVariable String queueOwner,@PathVariable String queueId){
+		GetMessageResponse response = new GetMessageResponse();
+		response.setMessages(queueService.getMessages(queueOwner,queueId));
+		return response;
 	}
 }
