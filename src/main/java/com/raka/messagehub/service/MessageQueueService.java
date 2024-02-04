@@ -79,20 +79,23 @@ public class MessageQueueService {
 				
 				messages.addAll(queue);
 				queue.clear();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				LOGGER.info("Timeout for " + id);
 			}
 		}
-		
 		return messages;
 	}
 	
 	private List<MessageQueue> getOwnerList(String ownerId){
 		return owner.compute(ownerId, (k,v)->{
 			if(v != null)
+			{
 				return v;
+			}
 			else
+			{
 				return new ArrayList<>();
+			}
 		});
 	}
 	
@@ -100,9 +103,14 @@ public class MessageQueueService {
 		owner.computeIfPresent(q.getOwnerId(), (k,v)->{
 			v.remove(q);
 			if(v.size() == 0)
+			{
+				LOGGER.info("Purging Owner " + q.getOwnerId());
 				return null;
+			}
 			else
+			{
 				return v;
+			}
 		});
 	}
 	
